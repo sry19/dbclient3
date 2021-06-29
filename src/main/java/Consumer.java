@@ -2,9 +2,8 @@ import com.google.gson.Gson;
 import io.swagger.client.ApiException;
 import io.swagger.client.ApiResponse;
 import io.swagger.client.api.TextbodyApi;
-import io.swagger.client.model.ErrMessage;
-import io.swagger.client.model.ResultVal;
 import io.swagger.client.model.TextLine;
+import java.math.BigDecimal;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CountDownLatch;
 
@@ -70,7 +69,7 @@ public class Consumer implements Runnable {
 
     try {
       // send requests to server
-      ApiResponse response = textbodyApi.analyzeNewLineWithHttpInfo(textLine, "wordcount");
+      BigDecimal response = textbodyApi.analyzeNewLine(textLine, "wordCount");
 
       // end time
       long endTime = System.currentTimeMillis();
@@ -79,7 +78,7 @@ public class Consumer implements Runnable {
 
       // if status code is 200, print result value
       this.syncCountSuccess.inc();
-      ResultVal resultVal = (ResultVal) response.getData();
+      //ResultVal resultVal = (ResultVal) response.getData();
       csvRecord = new CSVRecord(startTime, "POST", latency, 200);
       // System.out.println(resultVal.getMessage());
     } catch (ApiException e) {

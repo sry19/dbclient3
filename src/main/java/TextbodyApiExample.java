@@ -61,6 +61,9 @@ public class TextbodyApiExample {
       Thread writer = new Thread(new CSVWriter(ClientConstant.REPORT_CSV, csvWaitingQueue));
       writer.start();
 
+      Thread getthread = new Thread(new getThread(apiInstance));
+      getthread.start();
+
       // create a file reader thread
       new Thread(new Reader(blockingQueue, numOfThreads, fileReader)).start();
 
@@ -74,7 +77,7 @@ public class TextbodyApiExample {
 
 
       countDownLatch.await();
-
+      ClientConstant.GET_THREAD = false;
 
 
 
